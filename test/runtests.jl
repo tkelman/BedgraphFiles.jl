@@ -1,10 +1,17 @@
 using FileIO
+using TableTraits
 using IterableTables
-using BedgraphFiles
 using DataFrames
 using Base.Test
 
+try add_format(format"Bedgraph", (), [".bedgraph"], [:BedgraphFiles]) end # TODO: Remove once BedgraphFiles is registered with FileIO.
+
 @testset "BedgraphFiles" begin
+
+
+bedgraphfile = load(joinpath(@__DIR__, "data.bedgraph"))
+
+@test isiterable(bedgraphfile) == true
 
 df = load(joinpath(@__DIR__, "data.bedgraph")) |> DataFrame
 
